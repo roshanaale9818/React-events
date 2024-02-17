@@ -12,16 +12,19 @@ export default function FindEventSection() {
     event.preventDefault();
     setSearchTerm(searchElement?.current?.value);
   }
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState();
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data,isLoading, isError, error } = useQuery({
+    //signal params are inbuilt with useQuery we can use those
     queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
-    queryKey: ["events",{search: searchTerm}]
+    queryKey: ["events",{search: searchTerm}],
+    // dont fetch the query until some condition such as disable 
+    enabled:searchTerm !==undefined
   });
 
   let content = <p>Please enter a search term and to find events.</p>;
-  if (isPending) {
-    content = <LoadingIndicator />;
+  if (isLoading) {
+    content = <LoadingIndicator key='ss' />;
   }
   if (isError) {
     content = (
