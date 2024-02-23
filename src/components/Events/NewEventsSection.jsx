@@ -43,7 +43,7 @@ export default function NewEventsSection() {
 
  const {data,isPending,isError,error} =  useQuery({
     queryFn:fetchEvents,
-    queryKey:['events',{}],
+    queryKey:['events'],
     staleTime:5000,
     // gcTime
   });
